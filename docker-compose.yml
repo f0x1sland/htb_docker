@@ -1,11 +1,11 @@
-version: '3.3'
+version: '3.8'
 services:
     kali_htb:
         image: kali_htb
         build:
             context: .
             args: 
-                - USERPASS=<user password>
+                - USERPASS=<USER_PASSWORD>
         volumes:
             - '${PWD}/:/home/user/htb'
             - '${PWD}/config/hosts:/etc/hosts'
@@ -13,15 +13,15 @@ services:
             - '${PWD}/config/tmux.conf:/home/user/.tmux.conf'
             - '${PWD}/config/rules.v4:/etc/iptables/rules.v4'
             - '${PWD}/config/rules.v6:/etc/iptables/rules.v6'
-            - '${PWD}/config/<path to your ovpn conf>:/home/user/htb.ovpn'
-            - '<your tools dir>:/home/user/tools'
-            - '<your wordlists dir>:/home/user/wordlists'
+            - '${PWD}/config/<FILE_VPN_CONF_NAME>:/home/user/htb.ovpn'
+            # user volumes (if you need)
+            # - '<your tools dir>:/home/user/tools'
+            # - '<your wordlists dir>:/home/user/wordlists'
         devices:
             - /dev/net/tun
         ports:
             - '22:22'
-            - '8080:8080'
-            - '2222:2222'
+            - '8081:8081'
         cap_drop: 
             - NET_RAW    
         cap_add:
@@ -30,4 +30,4 @@ services:
             - net.ipv6.conf.all.disable_ipv6=0
         container_name: htb
         environment: 
-            - VPNCONFIG=/home/user/htb/htb.ovpn
+            - VPNCONFIG=/home/user/htb.ovpn
